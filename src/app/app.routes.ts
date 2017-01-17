@@ -3,7 +3,7 @@ import {SearchComponent} from './search/search.component';
 import {FollowComponent} from  './follow/follow.component';
 import {NgModule} from "@angular/core";
 import {LoginComponent} from "./login/login.component";
-import {CallbackComponent} from "./callback.componenent";
+import {CallbackComponent} from "./callback.component";
 import {ModalComponent} from "./modal/modal.component";
 
 const routes: Routes = [

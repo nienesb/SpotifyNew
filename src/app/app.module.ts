@@ -14,7 +14,7 @@ import { FollowComponent } from "./follow/follow.component";
 import { ArtistService} from "./artist.service";
 import { TruncatePipe } from "./truncate";
 import { LoginComponent } from "./login/login.component";
-import { CallbackComponent } from "./callback.componenent";
+import { CallbackComponent } from "./callback.component";
 import { ModalComponent } from "./modal/modal.component";
 
 
