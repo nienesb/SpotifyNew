@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-3">
+    <h2>Welkom {{ spotifyService.userInfo?.display_name }}</h2>
+    <h3>Afspeellijsten</h3>
+    <ul>
+      <li class="col-md-12" *ngFor="let pl of spotifyService.playListInfo; let i = index">
+        {{ pl.name }}
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-9">
+<h1>Start met zoeken</h1>
+
+<form (ngSubmit)="onSubmit()" #zoekVeld="ngForm">
+  <div class="form-group">
+    <input type="text" class="form-control" required
+           [(ngModel)]="zoekTerm"
+           name="zoekVeld"
+           #zoekVeld = "ngModel"
+           (keyup)="searchMusic()"
+           placeholder="Zoek je favoriete artiest">
+  </div>
+</form>
+
+<div *ngIf="searchRes">
+  <div class="row">
+    <div class="col-md-3 artistholder" *ngFor="let artist of searchRes; let i = index">
+      <div class="heart col-sm-12" (click)="followArtist(artist.id)"></div>
+      <div class="row">
+        <div class="col-sm-12">
+          <img src="{{ artist.images[1]?.url }}" width="100%" height="200"
+               (error)="imgError($event)"/>
+          <h4 class="artistName">
+            {{ artist.name | truncate:17 }}
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</div>

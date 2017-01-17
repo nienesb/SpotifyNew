@@ -1,0 +1,38 @@
+<navbar></navbar>
+<div class="main">
+  <div class="container">
+<h1>
+  <div class="jumbotron" *ngIf="!spotifyService.userInfo">
+    <h1>Spotify by Janine</h1>
+    <p>Welkom bij jouw online Spotify playlists. Direct je eigen lijsten ophalen? Log in en start!</p>
+    <a  class="btn btn-primary" (click)="LoginSpotify()">Log in with Spotify</a>
+  </div>
+</h1>
+<router-outlet></router-outlet>
+  </div>
+</div>
+
+<head>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="/node_modules/angular-material/angular-material.css">
+</head>
+<body ng-app="Spotify">
+
+<div ng-controller="YourController">
+
+</div>
+
+<script src="/node_modules/angular/angular.js"></script>
+<script src="/node_modules/angular-aria/angular-aria.js"></script>
+<script src="/node_modules/angular-animate/angular-animate.js"></script>
+<script src="/node_modules/angular-material/angular-material.js"></script>
+<script>
+
+  // Include app dependency on ngMaterial
+
+  angular.module( 'Spotify', [ 'ngMaterial' ] )
+    .controller("YourController", YourController );
+
+</script>
+
+</body>
