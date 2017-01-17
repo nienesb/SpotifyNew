@@ -1,11 +1,10 @@
 <div *ngIf="spotifyService.favoritesInfo">
-  <button md-raised-button (click)="open()">Open dialog</button>
   <div class="row">
     <div class="col-md-3 favoritesholder" *ngFor="let artist of spotifyService.favoritesInfo; let i = index">
-      <div class="broken-heart col-sm-12"></div>
+      <div class="broken-heart col-sm-12" (click)="unfollowArtist(artist.id)"></div>
       <div class="row">
         <div class="col-sm-12">
-          <img src="{{ artist.images[1]?.url }}" (click)="unfollowArtist(artist.id)" width="100%" height="200"
+          <img src="{{ artist.images[1]?.url }}" width="100%" height="200"
                (error)="imgError($event)"/>
           <h4 class="artistName">
             {{ artist.name | truncate:20 }}

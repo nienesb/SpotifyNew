@@ -15,7 +15,7 @@
 }
 
 .broken-heart{
-  background-image: url('./follow/broken-heart.png');
+  background-image: url('app/follow/broken-heart.png');
   background-repeat: no-repeat;
   background-position: center;
   position: absolute;

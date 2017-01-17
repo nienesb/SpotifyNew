@@ -5,13 +5,12 @@ import {Artist} from "../../Artist";
 import {SpotifyOptions} from "angular2-spotify";
 
 
-
 export const spotifyConfig = {
   clientId: '62b917dd9db545c9993305cca9b84f48',
   redirectUri: 'http://localhost:4200/callback',
   scope: 'user-follow-modify user-follow-read playlist-read-private playlist-read-collaborative playlist-modify-public playlist-modify-private user-library-read user-library-modify user-read-private',
   authToken: localStorage.getItem('angular2-spotify-token'),
-  apiBase : 'https://api.spotify.com/v1'
+  apiBase: 'https://api.spotify.com/v1'
 }
 
 interface HttpRequestOptions {
@@ -30,33 +29,26 @@ export class ArtistService {
   private showDialog;
   private authToken;
   // account settings mee geven
-  constructor(
-    private http:Http){
-        this.showDialog = true;
+  constructor(private http: Http) {
+    this.showDialog = true;
     this.authToken = localStorage.getItem('angular2-spotify-token');
 
-     }
+  }
 
   // functie om artiesten te zoeken
-  getArtist(searchWord : string) {
-    let fullURL = 'https://api.spotify.com/v1/search?type=artist&q='+ encodeURIComponent(searchWord);
+  getArtist(searchWord: string) {
+    let fullURL = 'https://api.spotify.com/v1/search?type=artist&q=' + encodeURIComponent(searchWord);
     return this.http.get(fullURL)
       .map((res: Response) => {
         console.log(res.json());
         return res.json();
       })
-      .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  // functie om favoriete artiesten op te halen
+  postApplicationRequest(code: string) {
+  }
 
-
-
-    postApplicationRequest(code : string) {
-
-    }
-
-  // functie om in te loggen
   login() {
     let promise = new Promise((resolve, reject) => {
       let w = 400,
@@ -102,7 +94,13 @@ export class ArtistService {
     });
 
     return Observable.fromPromise(promise).catch(this.handleError);
-    }
+  }
+
+  logout() {
+    this.authToken = null;
+    this.userInfo = null;
+    localStorage.setItem('angular2-spotify-token', null);
+  }
 
   private openDialog(uri, name, options, cb) {
     let win = window.open(uri, name, options);
@@ -144,6 +142,7 @@ export class ArtistService {
     return Observable.throw(error.json().error || 'Server error');
   }
 
+  //naam gebruiker ophalen
   getCurrentUser() {
     return this.api({
       method: 'get',
@@ -152,6 +151,7 @@ export class ArtistService {
     }).map(res => res.json());
   }
 
+  //afspeellijsten ophalen
   public getCurrentUsersPlaylists(limit: number, offSet: number) {
     return this.api({
       method: 'get',
@@ -160,6 +160,7 @@ export class ArtistService {
     }).map(res => res.json());
   }
 
+  //favoriete artiesten ophalen
   following(type: string, options?: SpotifyOptions) {
     options = options || {};
     options.type = type;
@@ -172,27 +173,21 @@ export class ArtistService {
   }
 
   //artiesten volgen/favoriet maken
-   follow(type: string, ids: string | Array<string>) {
+  follow(type: string, ids: string | Array<string>) {
     return this.api({
       method: 'put',
       url: `/me/following`,
-      search: { type: type, ids: ids.toString() },
+      search: {type: type, ids: ids.toString()},
       headers: this.getHeaders()
     });
   }
 
   // functie om artiesten te on-favorieten
-   unfollow(type: string, ids: string) {
-    /* return this.http.delete(spotifyConfig.apiBase +'/me/following?type=artist&ids=' + ids, new RequestOptions({
-       headers: this.getHeaders()
-     }))
-
-     console.log(spotifyConfig.apiBase +'/me/following?type=artist&ids=' + ids);
-    */
+  unfollow(type: string, ids: string) {
     return this.api({
       method: 'delete',
       url: `/me/following`,
-      search: { type: type, ids: ids },
+      search: {type: type, ids: ids},
       headers: this.getHeaders()
     });
   }
@@ -202,17 +197,13 @@ export class ArtistService {
   }
 
   private api(requestOptions: HttpRequestOptions) {
-    console.log(requestOptions);
-    var response =  this.http.request(new Request({
+    var response = this.http.request(new Request({
       url: spotifyConfig.apiBase + requestOptions.url,
       method: requestOptions.method || 'get',
       search: this.toQueryString(requestOptions.search),
       body: JSON.stringify(requestOptions.body),
       headers: requestOptions.headers
     }));
-    console.log(response);
-    console.log(this.toQueryString(requestOptions.search));
-    console.log(requestOptions.headers);
     return response;
   }
 }

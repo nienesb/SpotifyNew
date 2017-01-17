@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { MaterialModule, MdDialogModule } from '@angular/material';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
-
+import 'hammerjs';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from "./navbar/navbar.component";
 import { AppRoutes } from "./app.routes";
@@ -15,19 +15,18 @@ import { ArtistService} from "./artist.service";
 import { TruncatePipe } from "./truncate";
 import { LoginComponent } from "./login/login.component";
 import { CallbackComponent } from "./callback.component";
-import { ModalComponent } from "./modal/modal.component";
-
+import {DialogComponent} from "./dialog/dialog.component";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     CallbackComponent,
+    DialogComponent,
     NavbarComponent,
     FollowComponent,
     SearchComponent,
     LoginComponent,
-    ModalComponent,
     TruncatePipe
   ],
   imports: [
@@ -42,6 +41,7 @@ import { ModalComponent } from "./modal/modal.component";
     ArtistService,
     FormBuilder,
   ],
+  entryComponents: [DialogComponent],
   bootstrap: [AppComponent],
 })
 

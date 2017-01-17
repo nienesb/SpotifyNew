@@ -18,7 +18,11 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
-        "styles.css"
+        "styles.css",
+        "material2-app-themes.scss",
+        "angular-material.scss",
+        "angular-material.layouts.scss",
+        "angular-material.layout-att.scss"
       ],
       "scripts": [],
       "environments": {

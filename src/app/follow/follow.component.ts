@@ -4,8 +4,8 @@ import {Response} from "@angular/http";
 import {ArtistService} from "../artist.service";
 import {Router} from "@angular/router";
 import {Artist} from "../../../Artist";
-import {ModalComponent} from "../modal/modal.component";
 import {MdDialogRef, MdDialog, MdDialogConfig} from "@angular/material";
+import {DialogComponent} from "../dialog/dialog.component";
 
 
 @Component({
@@ -15,42 +15,15 @@ import {MdDialogRef, MdDialog, MdDialogConfig} from "@angular/material";
   styleUrls: ['follow.component.css']
 })
 
-export class FollowDialog {
-  dialogRef: MdDialogRef<any>;
-  private _dialog;
-  private lastDialogResult;
-
-  openDialog() {
-
-    let dialogRef = this._dialog.open(ModalComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.lastDialogResult = result;
-    })
-  }
-
-/*  constructor(
-    public dialog: MdDialog,
-    public viewContainerRef: ViewContainerRef) { }
-
-  open(key) {
-    let config = new MdDialogConfig();
-    config.viewContainerRef = this.viewContainerRef;
-
-    this.dialogRef = this.dialog.open(ModalComponent, config);
-
-    this.dialogRef.afterClosed().subscribe(result => {
-      this.dialogRef = null;
-    });
-  }*/
-}
 
 
 export class FollowComponent implements OnInit{
   private http;
 
   constructor (public router: Router,
-               private spotifyService: ArtistService) {}
+               private spotifyService: ArtistService,
+               private dialog: MdDialog) {
+  }
 
   initFollowList(){
     this.spotifyService.getCurrentUser().subscribe(user => {
@@ -71,8 +44,15 @@ export class FollowComponent implements OnInit{
   }
 
   unfollowArtist (artistId: string) {
-    this.spotifyService.unfollow('artist', artistId).subscribe(data => {
-      this.initFollowList();
+    let dialogRef = this.dialog.open(DialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) {
+        console.log("Ja!");
+        this.spotifyService.unfollow('artist', artistId).subscribe(data => {
+          console.log('test');
+          this.initFollowList();
+        })
+      }
     });
   }
 

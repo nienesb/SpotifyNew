@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router'
 import {ArtistService} from "../artist.service";
 
 @Component({
+  selector: 'loginButton',
   templateUrl: './login.component.html',
 })
 

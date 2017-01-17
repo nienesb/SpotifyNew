@@ -5,7 +5,9 @@
   <div class="jumbotron" *ngIf="!spotifyService.userInfo">
     <h1>Spotify by Janine</h1>
     <p>Welkom bij jouw online Spotify playlists. Direct je eigen lijsten ophalen? Log in en start!</p>
-    <a  class="btn btn-primary" (click)="LoginSpotify()">Log in with Spotify</a>
+
+    <loginButton></loginButton>
+
   </div>
 </h1>
 <router-outlet></router-outlet>

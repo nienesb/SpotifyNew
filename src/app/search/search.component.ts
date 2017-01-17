@@ -3,6 +3,8 @@ import {Component, OnInit} from '@angular/core';
 import {ArtistService} from "../artist.service";
 import {Artist} from "../../../Artist";
 import {Router} from "@angular/router";
+import {DialogComponent} from "../dialog/dialog.component";
+import {MdDialog} from "@angular/material";
 
 
 @Component({
@@ -17,7 +19,7 @@ export class SearchComponent implements OnInit{
   searchRes: Artist[];
   private src;
 
-  constructor (public router: Router, private spotifyService: ArtistService) {
+  constructor(public router: Router, private spotifyService: ArtistService, private dialog: MdDialog) {
   }
 
   ngOnInit() {
@@ -35,9 +37,14 @@ export class SearchComponent implements OnInit{
   }
 
   followArtist (artistId: string) {
-    this.spotifyService.follow('artist', artistId).subscribe(data => {
-    });
-
+    let dialogRef = this.dialog.open(DialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log("Ja!");
+        this.spotifyService.follow('artist', artistId).subscribe(data => {
+        });
+      }
+    })
   }
 
   searchMusic(){
