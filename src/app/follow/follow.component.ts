@@ -17,8 +17,19 @@ import {MdDialogRef, MdDialog, MdDialogConfig} from "@angular/material";
 
 export class FollowDialog {
   dialogRef: MdDialogRef<any>;
+  private _dialog;
+  private lastDialogResult;
 
-  constructor(
+  openDialog() {
+
+    let dialogRef = this._dialog.open(ModalComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.lastDialogResult = result;
+    })
+  }
+
+/*  constructor(
     public dialog: MdDialog,
     public viewContainerRef: ViewContainerRef) { }
 
@@ -31,7 +42,7 @@ export class FollowDialog {
     this.dialogRef.afterClosed().subscribe(result => {
       this.dialogRef = null;
     });
-  }
+  }*/
 }
 
 
